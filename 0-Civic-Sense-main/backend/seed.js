@@ -22,19 +22,6 @@ const seedUsers = [
         isBlocked: false,
         notifications: []
     },
-    {
-        fullname: 'Admin Priya',
-        username: 'admin_priya',
-        email: 'admin2@civicsense.com',
-        password: 'Admin@456',
-        role: 'admin',
-        trustScore: 100,
-        heroPoints: 0,
-        badges: ['Platform Admin'],
-        fakeReportsCount: 0,
-        isBlocked: false,
-        notifications: []
-    },
 
     // ---- CITIZEN ACCOUNTS ----
     {
@@ -62,45 +49,6 @@ const seedUsers = [
         fakeReportsCount: 0,
         isBlocked: false,
         notifications: []
-    },
-    {
-        fullname: 'Amit Deshmukh',
-        username: 'amit_d',
-        email: 'amit@test.com',
-        password: 'Citizen@123',
-        role: 'citizen',
-        trustScore: 50,
-        heroPoints: 0,
-        badges: [],
-        fakeReportsCount: 0,
-        isBlocked: false,
-        notifications: []
-    },
-    {
-        fullname: 'Kavita Joshi',
-        username: 'kavita_j',
-        email: 'kavita@test.com',
-        password: 'Citizen@123',
-        role: 'citizen',
-        trustScore: 50,
-        heroPoints: 0,
-        badges: [],
-        fakeReportsCount: 0,
-        isBlocked: false,
-        notifications: []
-    },
-    {
-        fullname: 'Vikram Naik',
-        username: 'vikram_n',
-        email: 'vikram@test.com',
-        password: 'Citizen@123',
-        role: 'citizen',
-        trustScore: 50,
-        heroPoints: 0,
-        badges: [],
-        fakeReportsCount: 0,
-        isBlocked: false,
-        notifications: []
     }
 ];
 
@@ -115,24 +63,18 @@ async function seed() {
 
         // Insert seed users
         await User.insertMany(seedUsers);
-        console.log('✅ Seeded 7 accounts (2 Admins + 5 Citizens)');
+        console.log('✅ Seeded 3 accounts (1 Admin + 2 Citizens)');
 
         console.log('\n========================================');
         console.log('  ADMIN ACCOUNTS');
         console.log('========================================');
         console.log('  Email: admin1@civicsense.com');
         console.log('  Password: Admin@123');
-        console.log('  --------');
-        console.log('  Email: admin2@civicsense.com');
-        console.log('  Password: Admin@456');
         console.log('========================================');
         console.log('  CITIZEN ACCOUNTS');
         console.log('========================================');
         console.log('  Email: rahul@test.com     | Pass: Citizen@123');
         console.log('  Email: sneha@test.com     | Pass: Citizen@123');
-        console.log('  Email: amit@test.com      | Pass: Citizen@123');
-        console.log('  Email: kavita@test.com    | Pass: Citizen@123');
-        console.log('  Email: vikram@test.com    | Pass: Citizen@123');
         console.log('========================================\n');
 
     } catch (err) {

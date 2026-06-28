@@ -1,47 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const StatCard = ({ label, value, max = 100 }) => {
-    const [hover, setHover] = useState(false);
-    const percentage = max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0;
-    
+const StatCard = ({ label, value }) => {
     return (
         <div 
-            onMouseEnter={() => setHover(true)} 
-            onMouseLeave={() => setHover(false)}
             style={{ 
-                textAlign: 'center', cursor: 'pointer', padding: '24px', 
+                textAlign: 'center', padding: '24px', 
                 background: 'rgba(255,255,255,0.03)', borderRadius: '16px', 
-                border: '1px solid rgba(255,255,255,0.1)', width: '240px', 
-                transition: 'all 0.3s',
-                boxShadow: hover ? '0 10px 30px rgba(43, 122, 95, 0.2)' : 'none',
-                transform: hover ? 'translateY(-5px)' : 'translateY(0)'
+                border: '1px solid rgba(255,255,255,0.1)', width: '240px'
             }}
         >
             <div style={{ 
                 position: 'relative', width: '120px', height: '120px', margin: '0 auto 20px', 
                 background: 'rgba(43,122,95,0.1)', borderRadius: '50%', 
                 display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                overflow: 'hidden', border: '2px solid rgba(116, 180, 155, 0.3)' 
+                border: '2px solid rgba(116, 180, 155, 0.3)' 
             }}>
-                <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0, 
-                    background: 'linear-gradient(0deg, #2B7A5F, #74B49B)',
-                    height: hover ? `${percentage}%` : '5%', 
-                    transition: 'height 0.8s cubic-bezier(0.4, 0, 0.2, 1)', opacity: 0.8
-                }}></div>
                 <div style={{ 
-                    position: 'relative', zIndex: 1, fontFamily: "'Outfit', sans-serif", 
-                    fontSize: '2rem', fontWeight: 700, color: 'white',
+                    fontFamily: "'Outfit', sans-serif", 
+                    fontSize: '2.5rem', fontWeight: 700, color: 'white',
                     textShadow: '0 2px 4px rgba(0,0,0,0.5)'
                 }}>
-                    {hover ? value : '?'}
+                    {value}
                 </div>
             </div>
             <div style={{ color: '#A8D5BA', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{label}</div>
-            <p style={{ color: '#F4FBF7', fontSize: '0.8rem', marginTop: '8px', opacity: hover ? 1 : 0, transition: 'opacity 0.3s' }}>
-                Hover to reveal!
-            </p>
         </div>
     );
 };
@@ -86,17 +69,25 @@ const LandingPage = () => {
             }}></div>
 
             {/* Hero Section */}
-            <section style={{ position: 'relative', zIndex: 1, padding: '120px 20px 80px', textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
-                <h1 style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: 'clamp(3rem, 8vw, 5rem)',
-                    fontWeight: 800,
-                    margin: '0 0 24px 0',
-                    background: 'linear-gradient(135deg, #2B7A5F, #A8D5BA)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    lineHeight: 1.1
-                }}>Report. Resolve. Revive.</h1>
+            <section style={{ 
+                position: 'relative', zIndex: 1, padding: '120px 20px 80px', 
+                textAlign: 'center', margin: '0 auto',
+                backgroundImage: 'linear-gradient(rgba(5, 21, 12, 0.8), rgba(5, 21, 12, 0.9)), url("/background.jpg")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundAttachment: 'fixed'
+            }}>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <h1 style={{
+                        fontFamily: "'Outfit', sans-serif",
+                        fontSize: 'clamp(3rem, 8vw, 5rem)',
+                        fontWeight: 800,
+                        margin: '0 0 24px 0',
+                        background: 'linear-gradient(135deg, #2B7A5F, #A8D5BA)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        lineHeight: 1.1
+                    }}>Report. Resolve. Revive.</h1>
                 <p style={{
                     fontSize: '1.25rem',
                     color: '#A8D5BA',
@@ -140,10 +131,10 @@ const LandingPage = () => {
                     <p style={{ color: '#A8D5BA', fontSize: '1rem' }}>We believe in transparency. No fake numbers, just real impact.</p>
                 </div>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '30px' }}>
-                    <StatCard label="Total Reports" value={stats.totalIssues} max={Math.max(10, stats.totalIssues)} />
-                    <StatCard label="Resolved Cases" value={stats.resolvedIssues} max={Math.max(10, stats.totalIssues)} />
-                    <StatCard label="Verified Reports" value={stats.verifiedIssues} max={Math.max(10, stats.totalIssues)} />
-                    <StatCard label="Active Citizens" value={stats.activeCitizens} max={Math.max(10, stats.activeCitizens)} />
+                    <StatCard label="Total Reports" value={stats.totalIssues} />
+                    <StatCard label="Resolved Cases" value={stats.resolvedIssues} />
+                    <StatCard label="Verified Reports" value={stats.verifiedIssues} />
+                    <StatCard label="Active Citizens" value={stats.activeCitizens} />
                 </div>
             </section>
 
@@ -156,34 +147,34 @@ const LandingPage = () => {
                 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
                     {[
-                        { icon: 'fa-solid fa-microchip', title: 'AI Issue Detection', desc: 'Automatically categorizes and assesses images of civic issues with high precision.' },
-                        { icon: 'fa-solid fa-copy', title: 'Smart Duplicate Detection', desc: 'Prevents spam by merging identical reports based on visual and location similarity.' },
-                        { icon: 'fa-solid fa-users', title: 'Community Verification', desc: 'Crowdsourced validation ensures authenticity and prioritizes real problems.' },
-                        { icon: 'fa-solid fa-location-crosshairs', title: 'Real-Time Tracking', desc: 'Follow your reports from submission to assignment and final resolution.' },
-                        { icon: 'fa-solid fa-medal', title: 'Gamification & Rewards', desc: 'Earn Hero Points, Badges, and Trust Scores by contributing positively.' },
-                        { icon: 'fa-solid fa-chart-line', title: 'Predictive Analytics', desc: 'Helps city officials anticipate infrastructure failures before they happen.' }
+                        { icon: 'fa-solid fa-microchip', title: 'AI Issue Detection', desc: 'Automatically categorizes and assesses images of civic issues with high precision.', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)' },
+                        { icon: 'fa-solid fa-copy', title: 'Smart Duplicate Detection', desc: 'Prevents spam by merging identical reports based on visual and location similarity.', color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.1)' },
+                        { icon: 'fa-solid fa-users', title: 'Community Verification', desc: 'Crowdsourced validation ensures authenticity and prioritizes real problems.', color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.1)' },
+                        { icon: 'fa-solid fa-location-crosshairs', title: 'Real-Time Tracking', desc: 'Follow your reports from submission to assignment and final resolution.', color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)' },
+                        { icon: 'fa-solid fa-medal', title: 'Gamification & Rewards', desc: 'Earn Hero Points, Badges, and Trust Scores by contributing positively.', color: '#ec4899', bg: 'rgba(236, 72, 153, 0.1)' },
+                        { icon: 'fa-solid fa-chart-line', title: 'Predictive Analytics', desc: 'Helps city officials anticipate infrastructure failures before they happen.', color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.1)' }
                     ].map((feat, i) => (
                         <div key={i} className="glass-panel" style={{
                             padding: '32px',
-                            background: 'rgba(255,255,255,0.03)',
+                            background: `linear-gradient(to bottom right, rgba(255,255,255,0.03), ${feat.bg})`,
                             backdropFilter: 'blur(16px)',
-                            border: '1px solid rgba(255,255,255,0.06)',
+                            border: `1px solid ${feat.color}40`,
                             borderRadius: '16px',
-                            transition: 'transform 0.3s, background 0.3s'
+                            transition: 'transform 0.3s, background 0.3s, box-shadow 0.3s'
                         }}
                         onMouseEnter={e => {
                             e.currentTarget.style.transform = 'translateY(-5px)';
-                            e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
-                            e.currentTarget.style.boxShadow = '0 10px 30px rgba(43,122,95,0.2)';
+                            e.currentTarget.style.background = `linear-gradient(to bottom right, rgba(255,255,255,0.06), ${feat.bg})`;
+                            e.currentTarget.style.boxShadow = `0 10px 30px ${feat.color}40`;
                         }}
                         onMouseLeave={e => {
                             e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+                            e.currentTarget.style.background = `linear-gradient(to bottom right, rgba(255,255,255,0.03), ${feat.bg})`;
                             e.currentTarget.style.boxShadow = 'none';
                         }}>
                             <div style={{
                                 width: '50px', height: '50px', borderRadius: '12px',
-                                background: 'rgba(43,122,95,0.2)', color: '#74B49B',
+                                background: feat.bg, color: feat.color,
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 fontSize: '1.5rem', marginBottom: '24px'
                             }}><i className={feat.icon}></i></div>

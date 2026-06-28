@@ -8,6 +8,7 @@ const Auth = () => {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [fullname, setFullname] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     
     const navigate = useNavigate();
@@ -216,14 +217,14 @@ const Auth = () => {
                             }}
                         />
                     </div>
-                    <div>
+                    <div style={{ position: 'relative' }}>
                         <label style={labelStyle}>Password</label>
                         <input 
-                            type="password" 
+                            type={showPassword ? "text" : "password"} 
                             value={password} 
                             onChange={e => setPassword(e.target.value)} 
                             required 
-                            style={{...inputStyle, marginBottom: (!isLogin && password.length > 0) ? '8px' : '20px'}}
+                            style={{...inputStyle, marginBottom: (!isLogin && password.length > 0) ? '8px' : '20px', paddingRight: '40px'}}
                             onFocus={e => {
                                 e.target.style.borderColor = '#4A9C7C';
                                 e.target.style.boxShadow = '0 0 0 2px rgba(43,122,95,0.2)';
@@ -233,6 +234,17 @@ const Auth = () => {
                                 e.target.style.boxShadow = 'none';
                             }}
                         />
+                        <button 
+                            type="button" 
+                            onClick={() => setShowPassword(!showPassword)}
+                            style={{
+                                position: 'absolute', right: '12px', top: '38px',
+                                background: 'none', border: 'none', color: '#74B49B',
+                                cursor: 'pointer', fontSize: '1.1rem'
+                            }}
+                        >
+                            <i className={showPassword ? "fa-solid fa-eye-slash" : "fa-solid fa-eye"}></i>
+                        </button>
                         {!isLogin && password.length > 0 && (
                             <div style={{ marginBottom: '20px' }}>
                                 <div style={{ display: 'flex', gap: '4px', marginBottom: '4px' }}>

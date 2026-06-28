@@ -8,6 +8,7 @@ const Feed = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('All');
     const [statusFilter, setStatusFilter] = useState('All');
+    const [userVotes, setUserVotes] = useState({});
     
     const socket = useContext(SocketContext);
     const navigate = useNavigate();
@@ -45,9 +46,30 @@ const Feed = () => {
             navigate('/login');
             return;
         }
+        if (userVotes[id] === 'up') return;
         try {
             await api.patch(`/api/issues/${id}/upvote`);
-            setIssues(issues.map(i => i.id === id ? { ...i, upvotes: i.upvotes + 1 } : i));
+            if (userVotes[id] === 'down') {
+                await api.patch(`/api/issues/${id}/upvote`);
+            }
+            setUserVotes(prev => ({ ...prev, [id]: 'up' }));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleDownvote = async (id) => {
+        if (!user) {
+            navigate('/login');
+            return;
+        }
+        if (userVotes[id] === 'down') return;
+        try {
+            await api.patch(`/api/issues/${id}/downvote`);
+            if (userVotes[id] === 'up') {
+                await api.patch(`/api/issues/${id}/downvote`);
+            }
+            setUserVotes(prev => ({ ...prev, [id]: 'down' }));
         } catch (err) {
             console.error(err);
         }
@@ -247,21 +269,34 @@ const Feed = () => {
                                 </div>
                             </div>
 
-                            {/* Footer Actions */}
                             <div style={{ padding: '16px 20px', borderTop: '1px solid rgba(255, 255, 255, 0.05)', background: 'rgba(0,0,0,0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <button 
-                                    onClick={() => handleUpvote(issue.id)} 
-                                    style={{ 
-                                        padding: '8px 16px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', 
-                                        borderRadius: '10px', color: 'white', fontSize: '0.9rem', fontWeight: '600', cursor: 'pointer',
-                                        display: 'flex', alignItems: 'center', gap: '8px', transition: 'background 0.2s'
-                                    }}
-                                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-                                >
-                                    {user ? <i className="fa-solid fa-arrow-up" style={{ color: '#10b981' }}></i> : <i className="fa-solid fa-lock" style={{ color: '#A8D5BA' }}></i>}
-                                    {issue.upvotes}
-                                </button>
+                                <div style={{ display: 'flex', gap: '8px' }}>
+                                    <button 
+                                        onClick={() => handleUpvote(issue.id)} 
+                                        disabled={userVotes[issue.id] === 'up'}
+                                        style={{ 
+                                            padding: '8px 12px', background: userVotes[issue.id] === 'up' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', 
+                                            borderRadius: '10px', color: 'white', fontSize: '0.9rem', fontWeight: '600', cursor: userVotes[issue.id] === 'up' ? 'default' : 'pointer',
+                                            display: 'flex', alignItems: 'center', gap: '8px', transition: 'background 0.2s'
+                                        }}
+                                        title="Upvote"
+                                    >
+                                        <i className="fa-solid fa-arrow-up" style={{ color: userVotes[issue.id] === 'up' ? '#34d399' : '#10b981' }}></i>
+                                        {issue.upvotes}
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDownvote(issue.id)} 
+                                        disabled={userVotes[issue.id] === 'down'}
+                                        style={{ 
+                                            padding: '8px 12px', background: userVotes[issue.id] === 'down' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', 
+                                            borderRadius: '10px', color: 'white', fontSize: '0.9rem', fontWeight: '600', cursor: userVotes[issue.id] === 'down' ? 'default' : 'pointer',
+                                            display: 'flex', alignItems: 'center', transition: 'background 0.2s'
+                                        }}
+                                        title="Downvote"
+                                    >
+                                        <i className="fa-solid fa-arrow-down" style={{ color: userVotes[issue.id] === 'down' ? '#f87171' : '#ef4444' }}></i>
+                                    </button>
+                                </div>
                                 
                                 <button style={{ background: 'none', border: 'none', color: '#A8D5BA', cursor: 'pointer', padding: '8px', transition: 'color 0.2s' }} onMouseEnter={e=>e.currentTarget.style.color='white'} onMouseLeave={e=>e.currentTarget.style.color='#A8D5BA'}>
                                     <i className="fa-solid fa-share-nodes"></i>

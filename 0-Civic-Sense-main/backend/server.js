@@ -88,45 +88,24 @@ Your task is to analyze urban infrastructure images and detect ONLY the followin
    * Flooded roads
    * Standing water caused by infrastructure failure
 
-For each detected anomaly, return:
-Detected: <Specific anomaly name>
-Severity: <Low | Medium | High>
-Confidence: <0-100%>
+For each detected anomaly, return a JSON array of objects, where each object has:
+"anomaly": <Specific anomaly name>
+"severity": <Low | Medium | High>
+"confidence": <0-100 as integer>
 
 Severity Guidelines:
 Low
-* Cosmetic issue
-* Minor wear
-* No immediate safety risk
+* Cosmetic issue, minor wear, no immediate safety risk
 Medium
-* Clear maintenance requirement
-* Causes inconvenience
-* May worsen if ignored
+* Clear maintenance requirement, causes inconvenience
 High
-* Significant safety hazard
-* Structural damage
-* Traffic obstruction
-* Risk of injury or accidents
-
-Confidence Guidelines:
-90-100%
-* Clearly visible
-* Strong visual evidence
-70-89%
-* Likely present
-* Good visual indicators
-50-69%
-* Possible presence
-* Limited visual evidence
-Below 50%
-* Do not report
+* Significant safety hazard, structural damage, traffic obstruction
 
 Rules:
 * Detect only the four supported categories.
 * Do not invent anomalies.
-* Do not report anomalies with confidence below 50%.
-* If multiple anomalies exist, list each separately.
-No supported civic anomaly detected.`;
+* Do not report anomalies with confidence below 50.
+* Return ONLY a valid JSON array. If no anomaly is detected, return an empty array [].`;
 
 const DUPLICATE_ENGINE_PROMPT = `You are the Smart Duplicate Detection Engine for a Civic Issue Reporting Platform.
 
@@ -164,19 +143,12 @@ Low Duplicate Confidence
 * Similar category but different locations
 * Weak textual overlap
 
-Output Format:
-Duplicate Status: <Duplicate | Unique>
-Duplicate Confidence: <0-100%>
-
-Matched Issue ID: <Issue ID or None>
-
-Reason:
-* Semantic Similarity: <%>
-* Location Similarity: <%>
-* Visual Similarity: <%>
-
-Recommendation:
-<Recommendation text>
+Output Format: Return ONLY a valid JSON object with these keys:
+"duplicateStatus": "Duplicate" | "Unique"
+"confidence": <0-100 as integer>
+"matchedIssueId": "<Issue ID>" | null
+"reason": "<explanation of semantic, location, and visual match>"
+"recommendation": "<recommendation text>"
 
 Additional Rules:
 * Never rely solely on exact title matching.
@@ -251,24 +223,25 @@ app.post('/api/issues', async (req, res) => {
                     contents: [
                         SYSTEM_PROMPT,
                         { inlineData: { data: base64Data, mimeType: mimeType } }
-                    ]
+                    ],
+                    config: {
+                        responseMimeType: "application/json"
+                    }
                 });
                 
                 aiRaw = response.text;
-                const detectedMatch = aiRaw.match(/Detected:\s*(.+)/i);
-                const severityMatch = aiRaw.match(/Severity:\s*(Low|Medium|High)/i);
+                let parsed = [];
+                try { parsed = JSON.parse(aiRaw); } catch(e) {}
                 
-                if (detectedMatch && !aiRaw.includes('No supported civic anomaly detected')) {
-                    title = detectedMatch[1].trim();
+                if (parsed.length > 0) {
+                    title = parsed[0].anomaly;
                     const titleLower = title.toLowerCase();
                     if (titleLower.includes('pothole')) detectedCategory = 'Infrastructure';
                     else if (titleLower.includes('garbage')) detectedCategory = 'Sanitation';
-                    else if (titleLower.includes('streetlight')) detectedCategory = 'Lighting';
-                    else if (titleLower.includes('water')) detectedCategory = 'Water & Flooding';
-                }
-                
-                if (severityMatch && !aiRaw.includes('No supported civic anomaly detected')) {
-                    const sev = severityMatch[1].toLowerCase();
+                    else if (titleLower.includes('streetlight') || titleLower.includes('light')) detectedCategory = 'Lighting';
+                    else if (titleLower.includes('water') || titleLower.includes('leak')) detectedCategory = 'Water & Flooding';
+                    
+                    const sev = parsed[0].severity?.toLowerCase();
                     if (sev === 'high') mlPriority = 'high';
                     else if (sev === 'medium') mlPriority = 'med';
                     else mlPriority = 'low';
@@ -302,19 +275,23 @@ app.post('/api/issues', async (req, res) => {
                     contents.push({ inlineData: { data: base64Data, mimeType: mimeType } });
                 }
 
-                const response = await ai.models.generateContent({ model: 'gemini-2.5-flash', contents: contents });
+                const response = await ai.models.generateContent({ 
+                    model: 'gemini-2.5-flash', 
+                    contents: contents,
+                    config: { responseMimeType: "application/json" }
+                });
                 aiDuplicateRaw = response.text;
                 
-                const dupMatch = aiDuplicateRaw.match(/Duplicate Status:\s*(Duplicate|Unique)/i);
-                const idMatch = aiDuplicateRaw.match(/Matched Issue ID:\s*(?:#)?([A-Za-z0-9-]+)/i);
-                
-                if (dupMatch) duplicateStatus = dupMatch[1].trim();
-                if (duplicateStatus.toLowerCase() === 'duplicate' && idMatch) {
-                    matchedIssueId = idMatch[1].trim();
-                    if (!matchedIssueId.startsWith('ISS-') && matchedIssueId.toLowerCase() !== 'none') {
-                        matchedIssueId = 'ISS-' + matchedIssueId.padStart(3, '0');
+                try {
+                    const dupParsed = JSON.parse(aiDuplicateRaw);
+                    duplicateStatus = dupParsed.duplicateStatus || 'Unique';
+                    if (duplicateStatus.toLowerCase() === 'duplicate' && dupParsed.matchedIssueId) {
+                        matchedIssueId = dupParsed.matchedIssueId;
+                        if (!matchedIssueId.startsWith('ISS-') && matchedIssueId.toLowerCase() !== 'none') {
+                            matchedIssueId = 'ISS-' + matchedIssueId.padStart(3, '0');
+                        }
                     }
-                }
+                } catch(e) {}
             } catch (e) {
                 console.error("Gemini Duplicate Error:", e);
             }
@@ -500,6 +477,14 @@ app.post('/api/users/:username/trust-score', async (req, res) => {
 app.patch('/api/issues/:id/upvote', async (req, res) => {
     try {
         const issue = await Issue.findOneAndUpdate({ id: req.params.id }, { $inc: { upvotes: 1 } }, { new: true });
+        io.emit('issue_updated', issue);
+        res.status(200).json(issue);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.patch('/api/issues/:id/downvote', async (req, res) => {
+    try {
+        const issue = await Issue.findOneAndUpdate({ id: req.params.id }, { $inc: { upvotes: -1 } }, { new: true });
         io.emit('issue_updated', issue);
         res.status(200).json(issue);
     } catch (e) { res.status(500).json({ error: e.message }); }
