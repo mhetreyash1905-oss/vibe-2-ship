@@ -15,7 +15,11 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-    cors: { origin: '*', methods: ['GET', 'POST', 'PATCH'] }
+    cors: { 
+        origin: ['https://civicpulse-vibe2ship.vercel.app', 'http://localhost:5173', 'http://localhost:5501'], 
+        methods: ['GET', 'POST', 'PATCH'],
+        credentials: true
+    }
 });
 
 const PORT = process.env.PORT || 5501;
@@ -26,7 +30,10 @@ mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ Connected to MongoDB'))
     .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
-app.use(cors());
+app.use(cors({
+    origin: ['https://civicpulse-vibe2ship.vercel.app', 'http://localhost:5173', 'http://localhost:5501'],
+    credentials: true
+}));
 app.use(express.json({ limit: '50mb' }));
 
 app.use('/frontend', express.static(path.join(__dirname, '../frontend')));
