@@ -46,9 +46,9 @@ Thumbs.db
 *.pid
 
 # Optional lock files (ignore only if your team agrees)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
 
 # Testing coverage
 .nyc_output
