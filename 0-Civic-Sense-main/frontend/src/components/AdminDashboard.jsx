@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { SocketContext } from '../App';
 
 const AdminDashboard = () => {
@@ -11,8 +11,8 @@ const AdminDashboard = () => {
     const fetchData = async () => {
         try {
             const [issueRes, userRes] = await Promise.all([
-                axios.get('http://localhost:5501/api/issues'),
-                axios.get('http://localhost:5501/api/users')
+                api.get('/api/issues'),
+                api.get('/api/users')
             ]);
             
             const fetchedIssues = issueRes.data;
@@ -44,21 +44,21 @@ const AdminDashboard = () => {
 
     const updateStage = async (id, stage) => {
         try {
-            await axios.patch(`http://localhost:5501/api/issues/${id}/stage`, { stage });
+            await api.patch(`/api/issues/${id}/stage`, { stage });
             fetchData();
         } catch (e) { console.error(e); }
     };
 
     const handleScrutinyAction = async (id, action) => {
         try {
-            await axios.post(`http://localhost:5501/api/issues/${id}/scrutiny-action`, { action });
+            await api.post(`/api/issues/${id}/scrutiny-action`, { action });
             fetchData();
         } catch (e) { console.error(e); }
     };
 
     const adjustTrustScore = async (username, amount) => {
         try {
-            await axios.post(`http://localhost:5501/api/users/${username}/trust-score`, { adjustValue: amount });
+            await api.post(`/api/users/${username}/trust-score`, { adjustValue: amount });
             fetchData();
         } catch (e) { console.error(e); }
     };

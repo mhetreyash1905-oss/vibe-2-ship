@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import { SocketContext } from '../App';
 
@@ -14,7 +14,7 @@ const Feed = () => {
     const user = JSON.parse(localStorage.getItem('user'));
 
     const fetchIssues = () => {
-        axios.get('http://localhost:5501/api/issues')
+        api.get('/api/issues')
             .then(res => setIssues(res.data))
             .catch(err => console.error(err));
     };
@@ -46,7 +46,7 @@ const Feed = () => {
             return;
         }
         try {
-            await axios.patch(`http://localhost:5501/api/issues/${id}/upvote`);
+            await api.patch(`/api/issues/${id}/upvote`);
             setIssues(issues.map(i => i.id === id ? { ...i, upvotes: i.upvotes + 1 } : i));
         } catch (err) {
             console.error(err);

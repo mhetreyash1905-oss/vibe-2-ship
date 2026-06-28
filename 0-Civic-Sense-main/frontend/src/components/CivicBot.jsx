@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 const CivicBot = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +30,7 @@ const CivicBot = () => {
         setLoading(true);
 
         try {
-            const res = await axios.post('http://localhost:5501/api/chatbot', {
+            const res = await api.post('/api/chatbot', {
                 message: trimmed,
                 username: user?.username || null
             });

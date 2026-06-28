@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
@@ -32,14 +32,14 @@ const Auth = () => {
         
         try {
             if (isLogin) {
-                const res = await axios.post('http://localhost:5501/api/login', { email, password });
+                const res = await api.post('/api/login', { email, password });
                 const user = res.data.user;
                 localStorage.setItem('user', JSON.stringify(user));
                 
                 if (user.role === 'admin') navigate('/admin');
                 else navigate('/dashboard');
             } else {
-                const res = await axios.post('http://localhost:5501/api/signup', { fullname, username, email, password });
+                const res = await api.post('/api/signup', { fullname, username, email, password });
                 const user = res.data.user;
                 localStorage.setItem('user', JSON.stringify(user));
                 navigate('/dashboard');

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const ReportIssue = () => {
@@ -69,7 +69,7 @@ const ReportIssue = () => {
         try {
             const base64Image = await toBase64(imageFile);
 
-            const res = await axios.post('http://localhost:5501/api/issues', {
+            const res = await api.post('/api/issues', {
                 desc, 
                 location, 
                 coordinates,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -11,13 +11,13 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     const fetchIssues = () => {
-        axios.get('http://localhost:5501/api/issues')
+        api.get('/api/issues')
             .then(res => setIssues(res.data))
             .catch(err => console.error(err));
     };
 
     const fetchPendingRequests = () => {
-        axios.get('http://localhost:5501/api/issues/pending-approval')
+        api.get('/api/issues/pending-approval')
             .then(res => setPendingRequests(res.data))
             .catch(err => console.error(err));
     };
@@ -34,7 +34,7 @@ const Dashboard = () => {
     }, [navigate]);
 
     const fetchUsers = () => {
-        axios.get('http://localhost:5501/api/users')
+        api.get('/api/users')
             .then(res => {
                 setUsers(res.data);
                 setIsDrawerOpen(true);
@@ -44,7 +44,7 @@ const Dashboard = () => {
 
     const updateStatus = async (id, status) => {
         try {
-            await axios.patch(`http://localhost:5501/api/issues/${id}/status`, { status });
+            await api.patch(`/api/issues/${id}/status`, { status });
             fetchIssues();
         } catch (err) {
             console.error(err);
@@ -53,7 +53,7 @@ const Dashboard = () => {
 
     const approveComplaint = async (id) => {
         try {
-            await axios.patch(`http://localhost:5501/api/issues/${id}/approve`);
+            await api.patch(`/api/issues/${id}/approve`);
             fetchPendingRequests();
             fetchIssues();
         } catch (err) {
@@ -64,7 +64,7 @@ const Dashboard = () => {
     const rejectComplaint = async (id) => {
         if (!window.confirm('Are you sure you want to reject and discard this complaint?')) return;
         try {
-            await axios.patch(`http://localhost:5501/api/issues/${id}/reject`);
+            await api.patch(`/api/issues/${id}/reject`);
             fetchPendingRequests();
         } catch (err) {
             console.error('Failed to reject:', err);

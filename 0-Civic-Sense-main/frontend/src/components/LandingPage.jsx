@@ -53,8 +53,8 @@ const LandingPage = () => {
         const fetchStats = async () => {
             try {
                 const [issuesRes, usersRes] = await Promise.all([
-                    fetch('http://localhost:5501/api/issues'),
-                    fetch('http://localhost:5501/api/users')
+                    fetch(`${import.meta.env.VITE_API_URL}/api/issues`),
+                    fetch(`${import.meta.env.VITE_API_URL}/api/users`)
                 ]);
                 const issues = await issuesRes.json();
                 const users = await usersRes.json();

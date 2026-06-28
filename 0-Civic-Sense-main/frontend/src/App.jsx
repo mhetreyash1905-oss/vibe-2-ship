@@ -36,7 +36,7 @@ function Navigation() {
 
     const fetchUser = async () => {
         try {
-            const res = await fetch('http://localhost:5501/api/users');
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users`);
             const data = await res.json();
             const me = data.find(u => u.username === user.username);
             if (me) {
@@ -211,7 +211,7 @@ function App() {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const newSocket = io('http://localhost:5501');
+        const newSocket = io(import.meta.env.VITE_API_URL);
         setSocket(newSocket);
         return () => newSocket.close();
     }, []);

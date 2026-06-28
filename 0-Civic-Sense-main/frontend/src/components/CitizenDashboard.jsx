@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { Link } from 'react-router-dom';
 import { SocketContext } from '../App';
 
@@ -15,18 +15,18 @@ const CitizenDashboard = () => {
 
     const fetchUserData = async () => {
         try {
-            const res = await axios.get('http://localhost:5501/api/users');
+            const res = await api.get('/api/users');
             const me = res.data.find(u => u.username === user.username);
             if (me) setStats(me);
 
-            const resIssues = await axios.get('http://localhost:5501/api/issues');
+            const resIssues = await api.get('/api/issues');
             setMyReports(resIssues.data.filter(i => i.reportedBy === user.username));
         } catch (e) { console.error(e); }
     };
 
     const fetchVerificationQueue = async () => {
         try {
-            const res = await axios.get('http://localhost:5501/api/issues');
+            const res = await api.get('/api/issues');
             const queue = res.data.filter(i => i.workflowStage === 'Community Verification' && i.reportedBy !== user.username);
             setPendingVerifications(queue);
         } catch (e) { console.error(e); }
@@ -57,7 +57,7 @@ const CitizenDashboard = () => {
 
     const handleVerify = async (id) => {
         try {
-            await axios.post(`http://localhost:5501/api/issues/${id}/verify`, {
+            await api.post(`/api/issues/${id}/verify`, {
                 user: user.username,
                 severity: 'Medium' 
             });
