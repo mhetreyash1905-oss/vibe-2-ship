@@ -122,7 +122,8 @@ const LandingPage = () => {
                         display: 'flex', alignItems: 'center', gap: '8px'
                     }}><i className="fa-solid fa-earth-americas"></i> Explore Feed</Link>
                 </div>
-            </section>
+            </div>
+        </section>
 
             {/* Live Statistics (Real Data & Animated) */}
             <section style={{ position: 'relative', zIndex: 1, padding: '60px 20px', background: 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
