@@ -20,7 +20,7 @@ function ProtectedRoute({ children, roleRequired }) {
     }
     
     if (roleRequired && user.role !== roleRequired) {
-        return <div style={{ backgroundColor: '#0a0a1a', minHeight: '100vh', paddingTop: '100px', textAlign: 'center', color: '#94a3b8', fontFamily: "'Inter', sans-serif" }}><h2 style={{ color: '#ef4444', fontFamily: "'Outfit', sans-serif" }}>Unauthorized</h2><p>You do not have access to this page.</p></div>;
+        return <div style={{ backgroundColor: 'var(--bg-main)', minHeight: '100vh', paddingTop: '100px', textAlign: 'center', color: '#94a3b8', fontFamily: "'Inter', sans-serif" }}><h2 style={{ color: '#ef4444', fontFamily: "'Outfit', sans-serif" }}>Unauthorized</h2><p>You do not have access to this page.</p></div>;
     }
     
     return children;
@@ -66,7 +66,7 @@ function Navigation() {
         fontSize: '0.95rem',
         padding: '8px 12px',
         borderRadius: '8px',
-        background: location.pathname === path ? 'rgba(255,255,255,0.05)' : 'transparent',
+        background: location.pathname === path ? 'var(--panel-bg)' : 'transparent',
         transition: 'color 0.2s, background 0.2s'
     });
 
@@ -85,8 +85,8 @@ function Navigation() {
             alignItems: 'center',
             fontFamily: "'Inter', sans-serif"
         }}>
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', color: 'white' }}>
-                <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', boxShadow: '0 4px 12px rgba(43,122,95,0.3)' }}>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', color: 'var(--text-main)' }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', boxShadow: '0 4px 12px rgba(43,122,95,0.3)' }}>
                     <i className="fa-solid fa-leaf"></i>
                 </div>
                 <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.4rem', fontWeight: '700', letterSpacing: '0.5px' }}>CivicPulse</span>
@@ -106,19 +106,19 @@ function Navigation() {
                 {user && (
                     <div style={{ position: 'relative', marginLeft: '12px' }}>
                         <button onClick={() => setShowNotifs(!showNotifs)} style={{ 
-                            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', 
-                            color: 'white', cursor: 'pointer', fontSize: '1.1rem', width: '40px', height: '40px', 
+                            background: 'var(--panel-bg)', border: '1px solid rgba(255,255,255,0.1)', 
+                            color: 'var(--text-main)', cursor: 'pointer', fontSize: '1.1rem', width: '40px', height: '40px', 
                             borderRadius: '10px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center',
                             transition: 'background 0.2s'
                         }}
-                        onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                        onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                        onMouseEnter={e => e.currentTarget.style.background = 'var(--panel-border)'}
+                        onMouseLeave={e => e.currentTarget.style.background = 'var(--panel-bg)'}
                         >
                             <i className="fa-solid fa-bell"></i>
                             {unreadCount > 0 && (
                                 <span style={{ 
                                     position: 'absolute', top: '-4px', right: '-4px', background: '#ef4444', 
-                                    color: 'white', fontSize: '0.65rem', padding: '2px 6px', borderRadius: '10px', 
+                                    color: 'var(--text-main)', fontSize: '0.65rem', padding: '2px 6px', borderRadius: '10px', 
                                     fontWeight: 'bold', border: '2px solid #0a0a1a' 
                                 }}>{unreadCount}</span>
                             )}
@@ -132,18 +132,18 @@ function Navigation() {
                                 borderRadius: '16px', boxShadow: '0 20px 40px rgba(0,0,0,0.5)', animation: 'fadeIn 0.2s ease'
                             }}>
                                 <div style={{ padding: '16px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <h4 style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: '1.1rem', color: 'white' }}>Notifications</h4>
-                                    {unreadCount > 0 && <span style={{ fontSize: '0.75rem', background: 'rgba(43,122,95,0.1)', color: '#A8D5BA', padding: '4px 8px', borderRadius: '8px', fontWeight: '600' }}>{unreadCount} New</span>}
+                                    <h4 style={{ margin: 0, fontFamily: "'Outfit', sans-serif", fontSize: '1.1rem', color: 'var(--text-main)' }}>Notifications</h4>
+                                    {unreadCount > 0 && <span style={{ fontSize: '0.75rem', background: 'rgba(37,99,235,0.1)', color: 'var(--text-muted)', padding: '4px 8px', borderRadius: '8px', fontWeight: '600' }}>{unreadCount} New</span>}
                                 </div>
                                 
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     {notifications.length === 0 ? (
-                                        <p style={{ padding: '30px 20px', margin: 0, color: '#A8D5BA', fontSize: '0.9rem', textAlign: 'center' }}>No notifications yet.</p>
+                                        <p style={{ padding: '30px 20px', margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem', textAlign: 'center' }}>No notifications yet.</p>
                                     ) : (
                                         notifications.slice().reverse().map((n, idx) => (
                                             <div key={idx} style={{ 
                                                 padding: '16px', borderBottom: '1px solid rgba(255,255,255,0.03)', 
-                                                fontSize: '0.85rem', background: !n.read ? 'rgba(43,122,95,0.1)' : 'transparent',
+                                                fontSize: '0.85rem', background: !n.read ? 'rgba(37,99,235,0.1)' : 'transparent',
                                                 display: 'flex', gap: '12px', alignItems: 'flex-start'
                                             }}>
                                                 <div style={{ 
@@ -155,8 +155,8 @@ function Navigation() {
                                                     <i className={`fa-solid ${n.message.includes('WARNING') || n.message.includes('BLOCKED') ? 'fa-triangle-exclamation' : 'fa-check'}`}></i>
                                                 </div>
                                                 <div>
-                                                    <p style={{ margin: '0 0 4px 0', color: 'white', lineHeight: 1.4 }}>{n.message}</p>
-                                                    <small style={{ color: '#A8D5BA' }}>{new Date(n.date).toLocaleString()}</small>
+                                                    <p style={{ margin: '0 0 4px 0', color: 'var(--text-main)', lineHeight: 1.4 }}>{n.message}</p>
+                                                    <small style={{ color: 'var(--text-muted)' }}>{new Date(n.date).toLocaleString()}</small>
                                                 </div>
                                             </div>
                                         ))
@@ -169,8 +169,8 @@ function Navigation() {
                 
                 {!user ? (
                     <Link to="/login" style={{
-                        padding: '10px 24px', marginLeft: '12px', background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
-                        color: 'white', textDecoration: 'none', borderRadius: '10px', fontWeight: '600', fontSize: '0.95rem',
+                        padding: '10px 24px', marginLeft: '12px', background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
+                        color: 'var(--text-main)', textDecoration: 'none', borderRadius: '10px', fontWeight: '600', fontSize: '0.95rem',
                         transition: 'transform 0.2s, box-shadow 0.2s', display: 'inline-block'
                     }}
                     onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(43,122,95,0.3)'; }}
@@ -180,23 +180,23 @@ function Navigation() {
                     <div style={{ position: 'relative', marginLeft: '12px' }}>
                         <div 
                             onClick={() => { setShowProfile(!showProfile); setShowNotifs(false); }} 
-                            style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', cursor: 'pointer', border: '2px solid rgba(255,255,255,0.2)' }}
+                            style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-main)', fontWeight: 'bold', cursor: 'pointer', border: '2px solid rgba(255,255,255,0.2)' }}
                         >
                             {user.fullname ? user.fullname[0].toUpperCase() : user.username[0].toUpperCase()}
                         </div>
                         {showProfile && (
                             <div style={{ position: 'absolute', top: '50px', right: '0', width: '220px', background: 'rgba(5, 21, 12, 0.95)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '8px', zIndex: 1000, boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
                                 <div style={{ padding: '8px 12px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '8px' }}>
-                                    <p style={{ margin: 0, fontWeight: 'bold', color: 'white' }}>{user.fullname || user.username}</p>
-                                    <small style={{ color: '#A8D5BA', textTransform: 'capitalize' }}>{user.role}</small>
+                                    <p style={{ margin: 0, fontWeight: 'bold', color: 'var(--text-main)' }}>{user.fullname || user.username}</p>
+                                    <small style={{ color: 'var(--text-muted)', textTransform: 'capitalize' }}>{user.role}</small>
                                 </div>
                                 {user.role === 'citizen' && (
-                                    <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 12px', color: 'white', textDecoration: 'none', borderRadius: '6px', transition: 'background 0.2s' }} onClick={() => setShowProfile(false)} onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}><i className="fa-solid fa-user"></i> My Profile</Link>
+                                    <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 12px', color: 'var(--text-main)', textDecoration: 'none', borderRadius: '6px', transition: 'background 0.2s' }} onClick={() => setShowProfile(false)} onMouseEnter={e => e.currentTarget.style.background = 'var(--panel-border)'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}><i className="fa-solid fa-user"></i> My Profile</Link>
                                 )}
                                 {user.role === 'admin' && (
-                                    <Link to="/admin" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 12px', color: 'white', textDecoration: 'none', borderRadius: '6px', transition: 'background 0.2s' }} onClick={() => setShowProfile(false)} onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}><i className="fa-solid fa-shield-halved"></i> Admin Panel</Link>
+                                    <Link to="/admin" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 12px', color: 'var(--text-main)', textDecoration: 'none', borderRadius: '6px', transition: 'background 0.2s' }} onClick={() => setShowProfile(false)} onMouseEnter={e => e.currentTarget.style.background = 'var(--panel-border)'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}><i className="fa-solid fa-shield-halved"></i> Admin Panel</Link>
                                 )}
-                                <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '4px 0' }}></div>
+                                <div style={{ height: '1px', background: 'var(--panel-border)', margin: '4px 0' }}></div>
                                 <button onClick={handleLogout} style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', background: 'transparent', border: 'none', color: '#ef4444', padding: '10px 12px', cursor: 'pointer', borderRadius: '6px', fontWeight: '600', transition: 'background 0.2s' }} onMouseEnter={e => e.currentTarget.style.background = 'rgba(239,68,68,0.1)'} onMouseLeave={e => e.currentTarget.style.background = 'transparent'}><i className="fa-solid fa-right-from-bracket"></i> Logout</button>
                             </div>
                         )}

@@ -53,10 +53,10 @@ const Auth = () => {
     const inputStyle = {
         width: '100%',
         padding: '12px 16px',
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backgroundColor: 'var(--panel-bg)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         borderRadius: '12px',
-        color: '#ffffff',
+        color: 'var(--text-main)',
         fontSize: '1rem',
         outline: 'none',
         transition: 'border-color 0.2s, box-shadow 0.2s',
@@ -67,7 +67,7 @@ const Auth = () => {
     const labelStyle = {
         display: 'block',
         marginBottom: '8px',
-        color: '#A8D5BA',
+        color: 'var(--text-muted)',
         fontSize: '0.9rem',
         fontWeight: '500',
         fontFamily: "'Inter', sans-serif"
@@ -82,7 +82,7 @@ const Auth = () => {
 
     return (
         <div style={{
-            backgroundColor: '#05150C',
+            backgroundColor: 'var(--bg-main)',
             minHeight: 'calc(100vh - 80px)',
             display: 'flex',
             justifyContent: 'center',
@@ -120,9 +120,9 @@ const Auth = () => {
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
                     <div style={{ 
                         width: '48px', height: '48px', borderRadius: '14px', 
-                        background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
+                        background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: '1.5rem', color: 'white', marginBottom: '16px',
+                        fontSize: '1.5rem', color: 'var(--text-main)', marginBottom: '16px',
                         boxShadow: '0 4px 12px rgba(43,122,95,0.3)'
                     }}>
                         <i className="fa-solid fa-leaf"></i>
@@ -131,12 +131,12 @@ const Auth = () => {
                         fontFamily: "'Outfit', sans-serif",
                         fontSize: '2rem',
                         fontWeight: '700',
-                        color: '#ffffff',
+                        color: 'var(--text-main)',
                         margin: '0 0 8px 0'
                     }}>
                         {isLogin ? 'Welcome Back' : 'Join CivicPulse'}
                     </h2>
-                    <p style={{ color: '#A8D5BA', fontSize: '0.95rem', margin: 0, fontFamily: "'Inter', sans-serif" }}>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', margin: 0, fontFamily: "'Inter', sans-serif" }}>
                         {isLogin ? 'Sign in to track your reports and earn points.' : 'Create an account to start improving your city.'}
                     </p>
                 </div>
@@ -170,11 +170,11 @@ const Auth = () => {
                                     required 
                                     style={inputStyle}
                                     onFocus={e => {
-                                        e.target.style.borderColor = '#4A9C7C';
+                                        e.target.style.borderColor = 'var(--primary-hover)';
                                         e.target.style.boxShadow = '0 0 0 2px rgba(43,122,95,0.2)';
                                     }}
                                     onBlur={e => {
-                                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                        e.target.style.borderColor = 'var(--panel-border)';
                                         e.target.style.boxShadow = 'none';
                                     }}
                                 />
@@ -188,11 +188,11 @@ const Auth = () => {
                                     required 
                                     style={inputStyle}
                                     onFocus={e => {
-                                        e.target.style.borderColor = '#4A9C7C';
+                                        e.target.style.borderColor = 'var(--primary-hover)';
                                         e.target.style.boxShadow = '0 0 0 2px rgba(43,122,95,0.2)';
                                     }}
                                     onBlur={e => {
-                                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                        e.target.style.borderColor = 'var(--panel-border)';
                                         e.target.style.boxShadow = 'none';
                                     }}
                                 />
@@ -208,11 +208,11 @@ const Auth = () => {
                             required 
                             style={inputStyle}
                             onFocus={e => {
-                                e.target.style.borderColor = '#4A9C7C';
+                                e.target.style.borderColor = 'var(--primary-hover)';
                                 e.target.style.boxShadow = '0 0 0 2px rgba(43,122,95,0.2)';
                             }}
                             onBlur={e => {
-                                e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                e.target.style.borderColor = 'var(--panel-border)';
                                 e.target.style.boxShadow = 'none';
                             }}
                         />
@@ -226,11 +226,11 @@ const Auth = () => {
                             required 
                             style={{...inputStyle, marginBottom: (!isLogin && password.length > 0) ? '8px' : '20px', paddingRight: '40px'}}
                             onFocus={e => {
-                                e.target.style.borderColor = '#4A9C7C';
+                                e.target.style.borderColor = 'var(--primary-hover)';
                                 e.target.style.boxShadow = '0 0 0 2px rgba(43,122,95,0.2)';
                             }}
                             onBlur={e => {
-                                e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                e.target.style.borderColor = 'var(--panel-border)';
                                 e.target.style.boxShadow = 'none';
                             }}
                         />
@@ -251,12 +251,12 @@ const Auth = () => {
                                     {[1, 2, 3, 4].map(level => (
                                         <div key={level} style={{ 
                                             flex: 1, height: '4px', borderRadius: '2px', 
-                                            background: strength >= level ? (strength === 4 ? '#10b981' : (strength >= 2 ? '#f59e0b' : '#ef4444')) : 'rgba(255,255,255,0.1)',
+                                            background: strength >= level ? (strength === 4 ? '#10b981' : (strength >= 2 ? '#f59e0b' : '#ef4444')) : 'var(--panel-border)',
                                             transition: 'background 0.3s'
                                         }}></div>
                                     ))}
                                 </div>
-                                <small style={{ color: '#A8D5BA', fontSize: '0.75rem' }}>
+                                <small style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>
                                     {strength === 4 ? 'Strong password' : 'Needs uppercase, lowercase, number, and special char'}
                                 </small>
                             </div>
@@ -266,10 +266,10 @@ const Auth = () => {
                     <button type="submit" style={{
                         width: '100%',
                         padding: '14px',
-                        background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
+                        background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                         border: 'none',
                         borderRadius: '12px',
-                        color: 'white',
+                        color: 'var(--text-main)',
                         fontSize: '1rem',
                         fontWeight: '600',
                         cursor: 'pointer',
@@ -291,7 +291,7 @@ const Auth = () => {
                 </form>
 
                 <div style={{ textAlign: 'center', marginTop: '32px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '24px' }}>
-                    <span style={{ color: '#A8D5BA', fontSize: '0.95rem', fontFamily: "'Inter', sans-serif" }}>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontFamily: "'Inter', sans-serif" }}>
                         {isLogin ? "Don't have an account? " : "Already have an account? "}
                     </span>
                     <button 
@@ -307,7 +307,7 @@ const Auth = () => {
                             fontFamily: "'Inter', sans-serif", padding: '0 4px',
                             transition: 'color 0.2s'
                         }}
-                        onMouseEnter={e => e.target.style.color = '#A8D5BA'}
+                        onMouseEnter={e => e.target.style.color = 'var(--text-muted)'}
                         onMouseLeave={e => e.target.style.color = '#74B49B'}
                     >
                         {isLogin ? 'Sign Up' : 'Sign In'}

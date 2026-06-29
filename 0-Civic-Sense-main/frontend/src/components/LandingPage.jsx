@@ -6,25 +6,25 @@ const StatCard = ({ label, value }) => {
         <div 
             style={{ 
                 textAlign: 'center', padding: '24px', 
-                background: 'rgba(255,255,255,0.03)', borderRadius: '16px', 
+                background: 'var(--panel-bg)', borderRadius: '16px', 
                 border: '1px solid rgba(255,255,255,0.1)', width: '240px'
             }}
         >
             <div style={{ 
                 position: 'relative', width: '120px', height: '120px', margin: '0 auto 20px', 
-                background: 'rgba(43,122,95,0.1)', borderRadius: '50%', 
+                background: 'rgba(37,99,235,0.1)', borderRadius: '50%', 
                 display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                border: '2px solid rgba(116, 180, 155, 0.3)' 
+                border: '2px solid rgba(147, 197, 253, 0.3)' 
             }}>
                 <div style={{ 
                     fontFamily: "'Outfit', sans-serif", 
-                    fontSize: '2.5rem', fontWeight: 700, color: 'white',
-                    textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                    fontSize: '2.5rem', fontWeight: 700, color: 'var(--text-main)',
+                    textShadow: '0 2px 4px rgba(0,0,0,0.05)'
                 }}>
                     {value}
                 </div>
             </div>
-            <div style={{ color: '#A8D5BA', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{label}</div>
+            <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>{label}</div>
         </div>
     );
 };
@@ -55,8 +55,8 @@ const LandingPage = () => {
 
     return (
         <div style={{
-            backgroundColor: '#05150C',
-            color: '#F4FBF7',
+            backgroundColor: 'var(--bg-main)',
+            color: 'var(--text-main)',
             minHeight: '100vh',
             fontFamily: "'Inter', sans-serif",
             overflowX: 'hidden'
@@ -72,7 +72,7 @@ const LandingPage = () => {
             <section style={{ 
                 position: 'relative', zIndex: 1, padding: '120px 20px 80px', 
                 textAlign: 'center', margin: '0 auto',
-                backgroundImage: 'linear-gradient(rgba(5, 21, 12, 0.8), rgba(5, 21, 12, 0.9)), url("/background.jpg")',
+                backgroundImage: 'linear-gradient(rgba(248, 250, 252, 0.8), rgba(248, 250, 252, 0.95)), url("/background.jpg")',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundAttachment: 'fixed'
@@ -83,14 +83,14 @@ const LandingPage = () => {
                         fontSize: 'clamp(3rem, 8vw, 5rem)',
                         fontWeight: 800,
                         margin: '0 0 24px 0',
-                        background: 'linear-gradient(135deg, #2B7A5F, #A8D5BA)',
+                        background: 'linear-gradient(135deg, var(--primary), var(--text-muted))',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         lineHeight: 1.1
                     }}>Report. Resolve. Revive.</h1>
                 <p style={{
                     fontSize: '1.25rem',
-                    color: '#A8D5BA',
+                    color: 'var(--text-muted)',
                     maxWidth: '600px',
                     margin: '0 auto 40px',
                     lineHeight: 1.6
@@ -98,8 +98,8 @@ const LandingPage = () => {
                 
                 <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
                     <Link to="/report" style={{
-                        background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
-                        color: 'white',
+                        background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
+                        color: 'var(--text-main)',
                         padding: '16px 32px',
                         borderRadius: '12px',
                         textDecoration: 'none',
@@ -110,9 +110,9 @@ const LandingPage = () => {
                         display: 'flex', alignItems: 'center', gap: '8px'
                     }}><i className="fa-solid fa-camera"></i> Report an Issue</Link>
                     <Link to="/feed" style={{
-                        background: 'rgba(255,255,255,0.05)',
+                        background: 'var(--panel-bg)',
                         border: '1px solid rgba(255,255,255,0.1)',
-                        color: 'white',
+                        color: 'var(--text-main)',
                         padding: '16px 32px',
                         borderRadius: '12px',
                         textDecoration: 'none',
@@ -128,8 +128,8 @@ const LandingPage = () => {
             {/* Live Statistics (Real Data & Animated) */}
             <section style={{ position: 'relative', zIndex: 1, padding: '60px 20px', background: 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                 <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                    <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2rem', color: 'white' }}>Real-Time CivicPulse Stats</h2>
-                    <p style={{ color: '#A8D5BA', fontSize: '1rem' }}>We believe in transparency. No fake numbers, just real impact.</p>
+                    <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2rem', color: 'var(--text-main)' }}>Real-Time CivicPulse Stats</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>We believe in transparency. No fake numbers, just real impact.</p>
                 </div>
                 <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '30px' }}>
                     <StatCard label="Total Reports" value={stats.totalIssues} />
@@ -142,8 +142,8 @@ const LandingPage = () => {
             {/* Features Grid */}
             <section style={{ position: 'relative', zIndex: 1, padding: '100px 20px', maxWidth: '1200px', margin: '0 auto' }}>
                 <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                    <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2.5rem', marginBottom: '16px', color: 'white' }}>Powered by Next-Gen AI</h2>
-                    <p style={{ color: '#A8D5BA', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>CivicPulse uses cutting-edge technology to streamline municipal issue resolution.</p>
+                    <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2.5rem', marginBottom: '16px', color: 'var(--text-main)' }}>Powered by Next-Gen AI</h2>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>CivicPulse uses cutting-edge technology to streamline municipal issue resolution.</p>
                 </div>
                 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
@@ -179,8 +179,8 @@ const LandingPage = () => {
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 fontSize: '1.5rem', marginBottom: '24px'
                             }}><i className={feat.icon}></i></div>
-                            <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.25rem', marginBottom: '12px', color: 'white' }}>{feat.title}</h3>
-                            <p style={{ color: '#A8D5BA', fontSize: '0.95rem', lineHeight: 1.6, margin: 0 }}>{feat.desc}</p>
+                            <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.25rem', marginBottom: '12px', color: 'var(--text-main)' }}>{feat.title}</h3>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, margin: 0 }}>{feat.desc}</p>
                         </div>
                     ))}
                 </div>
@@ -189,11 +189,11 @@ const LandingPage = () => {
             {/* How It Works */}
             <section style={{ position: 'relative', zIndex: 1, padding: '80px 20px 120px', maxWidth: '1000px', margin: '0 auto' }}>
                 <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                    <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2.5rem', marginBottom: '16px', color: 'white' }}>How It Works</h2>
+                    <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2.5rem', marginBottom: '16px', color: 'var(--text-main)' }}>How It Works</h2>
                 </div>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', position: 'relative' }}>
-                    <div style={{ position: 'absolute', left: '30px', top: '40px', bottom: '40px', width: '2px', background: 'rgba(43,122,95,0.5)', zIndex: 0 }}></div>
+                    <div style={{ position: 'absolute', left: '30px', top: '40px', bottom: '40px', width: '2px', background: 'rgba(37,99,235,0.5)', zIndex: 0 }}></div>
                     {[
                         { step: 1, title: 'Report an Issue', desc: 'Snap a photo and upload it. The app grabs your GPS location.' },
                         { step: 2, title: 'AI Analysis & Verification', desc: 'AI scans the image, filters duplicates, and routes it to the community for quick verification.' },
@@ -202,13 +202,13 @@ const LandingPage = () => {
                         <div key={i} style={{ display: 'flex', gap: '30px', position: 'relative', zIndex: 1, alignItems: 'flex-start' }}>
                             <div style={{
                                 width: '60px', height: '60px', borderRadius: '50%',
-                                background: '#05150C', border: '2px solid #4A9C7C',
+                                background: 'var(--bg-main)', border: '2px solid var(--primary-hover)',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 fontSize: '1.5rem', fontWeight: 'bold', color: '#74B49B', flexShrink: 0
                             }}>{step.step}</div>
                             <div style={{ paddingTop: '10px' }}>
-                                <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.5rem', marginBottom: '10px', color: 'white' }}>{step.title}</h3>
-                                <p style={{ color: '#A8D5BA', fontSize: '1.05rem', lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
+                                <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.5rem', marginBottom: '10px', color: 'var(--text-main)' }}>{step.title}</h3>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
                             </div>
                         </div>
                     ))}
@@ -217,7 +217,7 @@ const LandingPage = () => {
             
             {/* Footer */}
             <footer style={{ padding: '40px 20px', borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center', background: 'rgba(0,0,0,0.2)' }}>
-                <div style={{ color: '#A8D5BA', fontSize: '0.9rem' }}>
+                <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                     &copy; {new Date().getFullYear()} CivicPulse. All rights reserved.
                 </div>
             </footer>

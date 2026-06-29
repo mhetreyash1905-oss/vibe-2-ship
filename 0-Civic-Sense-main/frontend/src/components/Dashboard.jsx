@@ -80,7 +80,7 @@ const Dashboard = () => {
         fontWeight: 600,
         fontSize: '0.95rem',
         transition: 'all 0.3s ease',
-        background: isActive ? 'rgba(99,102,241,0.15)' : 'rgba(255,255,255,0.03)',
+        background: isActive ? 'rgba(99,102,241,0.15)' : 'var(--panel-bg)',
         color: isActive ? '#818cf8' : 'var(--text-muted, #888)',
         borderBottom: isActive ? '2px solid #818cf8' : '2px solid transparent',
     });
@@ -109,7 +109,7 @@ const Dashboard = () => {
                             <span style={{
                                 marginLeft: '8px',
                                 background: '#ef4444',
-                                color: 'white',
+                                color: 'var(--text-main)',
                                 borderRadius: '10px',
                                 padding: '1px 8px',
                                 fontSize: '0.75rem',
@@ -306,7 +306,7 @@ const Dashboard = () => {
                                         </td>
                                         <td><span className={`status-badge ${issue.status}`}>{issue.status}</span></td>
                                         <td>
-                                            <select value={issue.status} onChange={e => updateStatus(issue._id, e.target.value)} style={{background: 'rgba(255,255,255,0.1)', color: 'white', padding: '4px'}}>
+                                            <select value={issue.status} onChange={e => updateStatus(issue._id, e.target.value)} style={{background: 'var(--panel-border)', color: 'var(--text-main)', padding: '4px'}}>
                                                 <option value="pending">Pending</option>
                                                 <option value="progress">In Progress</option>
                                                 <option value="resolved">Resolved</option>
@@ -327,22 +327,22 @@ const Dashboard = () => {
                 right: isDrawerOpen ? 0 : '-450px',
                 width: '400px',
                 height: '100vh',
-                backgroundColor: '#1a1a24',
+                backgroundColor: 'var(--bg-main)',
                 borderLeft: '1px solid rgba(255,255,255,0.1)',
                 transition: 'right 0.3s ease',
                 zIndex: 1000,
                 padding: '20px',
                 overflowY: 'auto',
                 boxShadow: '-5px 0 15px rgba(0,0,0,0.5)',
-                color: 'white'
+                color: 'var(--text-main)'
             }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
                     <h3 style={{ margin: 0 }}>Registered Users</h3>
-                    <button onClick={() => setIsDrawerOpen(false)} style={{ background: 'transparent', border: 'none', color: 'white', fontSize: '24px', cursor: 'pointer', lineHeight: '1' }}>&times;</button>
+                    <button onClick={() => setIsDrawerOpen(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-main)', fontSize: '24px', cursor: 'pointer', lineHeight: '1' }}>&times;</button>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                     {users.map((u, i) => (
-                        <div key={i} style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <div key={i} style={{ background: 'var(--panel-bg)', padding: '15px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
                             <div style={{ fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '5px' }}>{u.fullname || u.username} <span style={{ fontSize: '0.8rem', color: u.role === 'admin' ? '#ff9800' : '#4caf50', marginLeft: '10px', textTransform: 'uppercase' }}>[{u.role}]</span></div>
                             <div style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginBottom: '3px' }}><strong>Username:</strong> {u.username}</div>
                             <div style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginBottom: '3px' }}><strong>Email:</strong> {u.email}</div>

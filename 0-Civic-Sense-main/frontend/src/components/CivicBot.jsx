@@ -70,20 +70,20 @@ const CivicBot = () => {
                     width: '64px',
                     height: '64px',
                     borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
+                    background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                     border: 'none',
-                    color: 'white',
+                    color: 'var(--text-main)',
                     fontSize: '1.75rem',
                     cursor: 'pointer',
-                    boxShadow: '0 10px 25px rgba(43, 122, 95, 0.4)',
+                    boxShadow: '0 10px 25px rgba(37, 99, 235, 0.4)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     zIndex: 9999,
                     transition: 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease'
                 }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1) translateY(-4px)'; e.currentTarget.style.boxShadow = '0 15px 30px rgba(43, 122, 95, 0.6)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1) translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(43, 122, 95, 0.4)'; }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1) translateY(-4px)'; e.currentTarget.style.boxShadow = '0 15px 30px rgba(37, 99, 235, 0.6)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1) translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(37, 99, 235, 0.4)'; }}
             >
                 <i className={isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-robot'}></i>
             </button>
@@ -111,7 +111,7 @@ const CivicBot = () => {
                     {/* Header */}
                     <div style={{
                         padding: '16px 20px',
-                        background: 'linear-gradient(135deg, rgba(43, 122, 95, 0.15), rgba(74, 156, 124, 0.1))',
+                        background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(74, 156, 124, 0.1))',
                         borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
                         display: 'flex',
                         alignItems: 'center',
@@ -119,14 +119,14 @@ const CivicBot = () => {
                     }}>
                         <div style={{
                             width: '40px', height: '40px', borderRadius: '12px',
-                            background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
+                            background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontSize: '1.2rem', color: 'white'
+                            fontSize: '1.2rem', color: 'var(--text-main)'
                         }}>
                             <i className="fa-solid fa-robot"></i>
                         </div>
                         <div>
-                            <h4 style={{ margin: 0, fontSize: '1.1rem', fontFamily: "'Outfit', sans-serif", color: 'white' }}>PulseBot</h4>
+                            <h4 style={{ margin: 0, fontSize: '1.1rem', fontFamily: "'Outfit', sans-serif", color: 'var(--text-main)' }}>PulseBot</h4>
                             <span style={{ fontSize: '0.75rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '4px' }}>
                                 <span style={{ width: '6px', height: '6px', background: '#10b981', borderRadius: '50%', display: 'inline-block' }}></span>
                                 Online — AI Powered
@@ -150,12 +150,12 @@ const CivicBot = () => {
                                 padding: '12px 16px',
                                 borderRadius: msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
                                 background: msg.role === 'user'
-                                    ? 'linear-gradient(135deg, #2B7A5F, #4A9C7C)'
-                                    : 'rgba(255, 255, 255, 0.05)',
+                                    ? 'linear-gradient(135deg, var(--primary), var(--primary-hover))'
+                                    : 'var(--panel-bg)',
                                 border: msg.role === 'bot' ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
                                 fontSize: '0.9rem',
                                 lineHeight: '1.5',
-                                color: 'white',
+                                color: 'var(--text-main)',
                                 wordBreak: 'break-word',
                                 boxShadow: msg.role === 'user' ? '0 4px 12px rgba(43,122,95,0.2)' : 'none'
                             }}
@@ -167,10 +167,10 @@ const CivicBot = () => {
                                 alignSelf: 'flex-start',
                                 padding: '12px 16px',
                                 borderRadius: '16px 16px 16px 4px',
-                                background: 'rgba(255, 255, 255, 0.05)',
+                                background: 'var(--panel-bg)',
                                 border: '1px solid rgba(255, 255, 255, 0.05)',
                                 fontSize: '0.9rem',
-                                color: '#A8D5BA',
+                                color: 'var(--text-muted)',
                                 display: 'flex',
                                 gap: '8px',
                                 alignItems: 'center'
@@ -199,18 +199,18 @@ const CivicBot = () => {
                             placeholder="Ask PulseBot anything..."
                             style={{
                                 flex: 1,
-                                background: 'rgba(255, 255, 255, 0.05)',
+                                background: 'var(--panel-bg)',
                                 border: '1px solid rgba(255, 255, 255, 0.1)',
                                 borderRadius: '14px',
                                 padding: '12px 16px',
-                                color: 'white',
+                                color: 'var(--text-main)',
                                 fontSize: '0.95rem',
                                 outline: 'none',
                                 transition: 'border-color 0.2s',
                                 fontFamily: "'Inter', sans-serif"
                             }}
-                            onFocus={e => e.target.style.borderColor = '#4A9C7C'}
-                            onBlur={e => e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
+                            onFocus={e => e.target.style.borderColor = 'var(--primary-hover)'}
+                            onBlur={e => e.target.style.borderColor = 'var(--panel-border)'}
                         />
                         <button
                             onClick={sendMessage}
@@ -219,9 +219,9 @@ const CivicBot = () => {
                                 width: '44px',
                                 height: '44px',
                                 borderRadius: '14px',
-                                background: loading || !input.trim() ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
+                                background: loading || !input.trim() ? 'var(--panel-bg)' : 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                                 border: 'none',
-                                color: loading || !input.trim() ? '#A8D5BA' : 'white',
+                                color: loading || !input.trim() ? 'var(--text-muted)' : 'white',
                                 cursor: loading || !input.trim() ? 'not-allowed' : 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',

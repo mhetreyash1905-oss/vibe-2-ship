@@ -96,10 +96,10 @@ const ReportIssue = () => {
     const inputStyle = {
         width: '100%',
         padding: '12px 16px',
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backgroundColor: 'var(--panel-bg)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
         borderRadius: '12px',
-        color: '#ffffff',
+        color: 'var(--text-main)',
         fontSize: '1rem',
         outline: 'none',
         transition: 'border-color 0.2s, box-shadow 0.2s',
@@ -109,7 +109,7 @@ const ReportIssue = () => {
     const labelStyle = {
         display: 'block',
         marginBottom: '8px',
-        color: '#A8D5BA',
+        color: 'var(--text-muted)',
         fontSize: '0.9rem',
         fontWeight: '500',
         fontFamily: "'Inter', sans-serif"
@@ -117,7 +117,7 @@ const ReportIssue = () => {
 
     return (
         <div style={{
-            backgroundColor: '#05150C',
+            backgroundColor: 'var(--bg-main)',
             minHeight: 'calc(100vh - 80px)',
             display: 'flex',
             justifyContent: 'center',
@@ -151,10 +151,10 @@ const ReportIssue = () => {
                         fontFamily: "'Outfit', sans-serif",
                         fontSize: '2rem',
                         fontWeight: '700',
-                        color: '#ffffff',
+                        color: 'var(--text-main)',
                         margin: '0 0 8px 0'
                     }}>Report Civic Issue</h2>
-                    <p style={{ color: '#A8D5BA', fontSize: '0.95rem', margin: 0, fontFamily: "'Inter', sans-serif" }}>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', margin: 0, fontFamily: "'Inter', sans-serif" }}>
                         Your report will be analyzed by AI and verified by the community.
                     </p>
                 </div>
@@ -176,7 +176,7 @@ const ReportIssue = () => {
                                 overflow: 'hidden'
                             }}
                             onMouseEnter={e => {
-                                e.currentTarget.style.borderColor = '#4A9C7C';
+                                e.currentTarget.style.borderColor = 'var(--primary-hover)';
                                 e.currentTarget.style.background = 'rgba(74, 156, 124, 0.05)';
                             }}
                             onMouseLeave={e => {
@@ -195,11 +195,11 @@ const ReportIssue = () => {
                                 <img src={imagePreview} alt="Preview" style={{ width: '100%', maxHeight: '300px', objectFit: 'contain', borderRadius: '8px' }} />
                             ) : (
                                 <>
-                                    <div style={{ fontSize: '2.5rem', color: '#4A9C7C', marginBottom: '16px' }}>
+                                    <div style={{ fontSize: '2.5rem', color: 'var(--primary-hover)', marginBottom: '16px' }}>
                                         <i className="fa-solid fa-camera"></i>
                                     </div>
-                                    <div style={{ color: '#ffffff', fontWeight: '500', marginBottom: '4px' }}>Drag & drop or click to upload a photo</div>
-                                    <div style={{ color: '#A8D5BA', fontSize: '0.85rem' }}>JPEG, PNG up to 10MB</div>
+                                    <div style={{ color: 'var(--text-main)', fontWeight: '500', marginBottom: '4px' }}>Drag & drop or click to upload a photo</div>
+                                    <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>JPEG, PNG up to 10MB</div>
                                 </>
                             )}
                         </div>
@@ -214,7 +214,7 @@ const ReportIssue = () => {
                                 placeholder="Click the button to fetch GPS" 
                                 readOnly 
                                 required 
-                                style={{ ...inputStyle, background: 'rgba(0,0,0,0.3)', cursor: 'not-allowed', color: '#A8D5BA' }} 
+                                style={{ ...inputStyle, background: 'rgba(0,0,0,0.3)', cursor: 'not-allowed', color: 'var(--text-muted)' }} 
                             />
                             <button 
                                 type="button" 
@@ -222,10 +222,10 @@ const ReportIssue = () => {
                                 disabled={gpsLoading} 
                                 style={{
                                     padding: '0 24px',
-                                    background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
+                                    background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                                     border: 'none',
                                     borderRadius: '12px',
-                                    color: 'white',
+                                    color: 'var(--text-main)',
                                     fontWeight: '600',
                                     cursor: gpsLoading ? 'not-allowed' : 'pointer',
                                     flexShrink: 0,
@@ -252,19 +252,19 @@ const ReportIssue = () => {
                             onChange={(e) => setDesc(e.target.value)}
                             style={{ ...inputStyle, resize: 'vertical' }}
                             onFocus={e => {
-                                e.target.style.borderColor = '#4A9C7C';
+                                e.target.style.borderColor = 'var(--primary-hover)';
                                 e.target.style.boxShadow = '0 0 0 2px rgba(74, 156, 124, 0.2)';
                             }}
                             onBlur={e => {
-                                e.target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                                e.target.style.borderColor = 'var(--panel-border)';
                                 e.target.style.boxShadow = 'none';
                             }}
                         />
                     </div>
 
                     <div style={{
-                        background: 'rgba(43, 122, 95, 0.15)',
-                        border: '1px solid rgba(43, 122, 95, 0.3)',
+                        background: 'rgba(37, 99, 235, 0.15)',
+                        border: '1px solid rgba(37, 99, 235, 0.3)',
                         borderRadius: '12px',
                         padding: '16px',
                         display: 'flex',
@@ -272,8 +272,8 @@ const ReportIssue = () => {
                         alignItems: 'flex-start',
                         marginBottom: '24px'
                     }}>
-                        <i className="fa-solid fa-circle-info" style={{ color: '#4A9C7C', fontSize: '1.2rem', marginTop: '2px' }}></i>
-                        <p style={{ color: '#F4FBF7', fontSize: '0.9rem', margin: 0, lineHeight: 1.5, fontFamily: "'Inter', sans-serif" }}>
+                        <i className="fa-solid fa-circle-info" style={{ color: 'var(--primary-hover)', fontSize: '1.2rem', marginTop: '2px' }}></i>
+                        <p style={{ color: 'var(--text-main)', fontSize: '0.9rem', margin: 0, lineHeight: 1.5, fontFamily: "'Inter', sans-serif" }}>
                             Your image will be analyzed by our AI for issue detection, duplicate checking, and authenticity verification.
                         </p>
                     </div>
@@ -281,10 +281,10 @@ const ReportIssue = () => {
                     <button type="submit" disabled={loading} style={{
                         width: '100%',
                         padding: '16px',
-                        background: loading ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #2B7A5F, #4A9C7C)',
+                        background: loading ? 'var(--panel-border)' : 'linear-gradient(135deg, var(--primary), var(--primary-hover))',
                         border: 'none',
                         borderRadius: '12px',
-                        color: loading ? '#A8D5BA' : 'white',
+                        color: loading ? 'var(--text-muted)' : 'white',
                         fontSize: '1.1rem',
                         fontWeight: '600',
                         cursor: loading ? 'not-allowed' : 'pointer',

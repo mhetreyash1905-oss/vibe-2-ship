@@ -81,11 +81,11 @@ const AdminDashboard = () => {
                 flex: '0 0 auto'
             }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.25rem', margin: 0, color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.25rem', margin: 0, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <i className={`fa-solid ${icon}`} style={{ color }}></i>
                         {title}
                     </h3>
-                    <span style={{ background: 'rgba(255,255,255,0.1)', padding: '4px 10px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: '600', color: 'white' }}>
+                    <span style={{ background: 'var(--panel-border)', padding: '4px 10px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-main)' }}>
                         {columnIssues.length}
                     </span>
                 </div>
@@ -104,7 +104,7 @@ const AdminDashboard = () => {
                         onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
                         >
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                                <span style={{ fontSize: '0.75rem', color: '#A8D5BA', background: 'rgba(255,255,255,0.05)', padding: '2px 8px', borderRadius: '6px' }}>#{issue.id.slice(-6)}</span>
+                                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', background: 'var(--panel-bg)', padding: '2px 8px', borderRadius: '6px' }}>#{issue.id.slice(-6)}</span>
                                 <span style={{ fontSize: '0.75rem', fontWeight: '600', color: issue.trustScore >= 60 ? '#10b981' : (issue.trustScore < 40 ? '#ef4444' : '#f59e0b') }}>
                                     Trust: {issue.trustScore}%
                                 </span>
@@ -124,9 +124,9 @@ const AdminDashboard = () => {
                                 </div>
                             )}
 
-                            <h4 style={{ margin: '0 0 6px 0', fontFamily: "'Outfit', sans-serif", fontSize: '1.05rem', color: 'white', lineHeight: 1.3 }}>{issue.title}</h4>
-                            <p style={{ fontSize: '0.85rem', color: '#A8D5BA', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                <i className="fa-solid fa-location-dot" style={{ color: '#4A9C7C' }}></i> {issue.location}
+                            <h4 style={{ margin: '0 0 6px 0', fontFamily: "'Outfit', sans-serif", fontSize: '1.05rem', color: 'var(--text-main)', lineHeight: 1.3 }}>{issue.title}</h4>
+                            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <i className="fa-solid fa-location-dot" style={{ color: 'var(--primary-hover)' }}></i> {issue.location}
                             </p>
                             
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -140,11 +140,11 @@ const AdminDashboard = () => {
                                         </button>
                                     </>
                                 ) : stages.includes('Reported') || stages.includes('Community Verification') ? (
-                                    <button onClick={() => updateStage(issue.id, 'Approved')} style={{ width: '100%', padding: '8px', background: 'linear-gradient(135deg, #2B7A5F, #4A9C7C)', border: 'none', borderRadius: '8px', color: 'white', fontSize: '0.85rem', fontWeight: '600', cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseEnter={e=>e.currentTarget.style.opacity=0.9} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
+                                    <button onClick={() => updateStage(issue.id, 'Approved')} style={{ width: '100%', padding: '8px', background: 'linear-gradient(135deg, var(--primary), var(--primary-hover))', border: 'none', borderRadius: '8px', color: 'var(--text-main)', fontSize: '0.85rem', fontWeight: '600', cursor: 'pointer', transition: 'opacity 0.2s' }} onMouseEnter={e=>e.currentTarget.style.opacity=0.9} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
                                         Override & Approve
                                     </button>
                                 ) : stages.includes('Approved') ? (
-                                    <button onClick={() => updateStage(issue.id, 'Assigned')} style={{ width: '100%', padding: '8px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', color: 'white', fontSize: '0.85rem', fontWeight: '600', cursor: 'pointer', transition: 'background 0.2s' }} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.15)'} onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.1)'}>
+                                    <button onClick={() => updateStage(issue.id, 'Assigned')} style={{ width: '100%', padding: '8px', background: 'var(--panel-border)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', color: 'var(--text-main)', fontSize: '0.85rem', fontWeight: '600', cursor: 'pointer', transition: 'background 0.2s' }} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.15)'} onMouseLeave={e=>e.currentTarget.style.background='var(--panel-border)'}>
                                         Assign Department
                                     </button>
                                 ) : stages.includes('Assigned') ? (
@@ -176,9 +176,9 @@ const AdminDashboard = () => {
 
     return (
         <div style={{
-            backgroundColor: '#05150C',
+            backgroundColor: 'var(--bg-main)',
             minHeight: 'calc(100vh - 80px)',
-            color: '#F4FBF7',
+            color: 'var(--text-main)',
             fontFamily: "'Inter', sans-serif",
             padding: '40px 20px',
             position: 'relative'
@@ -195,10 +195,10 @@ const AdminDashboard = () => {
                 {/* Header Section */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px', marginBottom: '40px' }}>
                     <div>
-                        <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2.5rem', margin: '0 0 8px 0', color: '#ffffff' }}>
+                        <h2 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2.5rem', margin: '0 0 8px 0', color: 'var(--text-main)' }}>
                             Command Center
                         </h2>
-                        <p style={{ color: '#A8D5BA', fontSize: '1rem', margin: 0 }}>Real-time civic management and moderation dashboard.</p>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: 0 }}>Real-time civic management and moderation dashboard.</p>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#10b981', fontSize: '0.9rem', fontWeight: '600', padding: '8px 16px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '20px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
                         <span style={{ width: '8px', height: '8px', background: '#10b981', borderRadius: '50%', display: 'inline-block', boxShadow: '0 0 10px #10b981' }}></span>
@@ -209,10 +209,10 @@ const AdminDashboard = () => {
                 {/* Overview Cards */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', marginBottom: '48px' }}>
                     {[
-                        { icon: 'fa-layer-group', color: '#4A9C7C', bg: 'rgba(74, 156, 124, 0.15)', value: stats.total, label: 'Total Issues' },
+                        { icon: 'fa-layer-group', color: 'var(--primary-hover)', bg: 'rgba(74, 156, 124, 0.15)', value: stats.total, label: 'Total Issues' },
                         { icon: 'fa-hourglass-half', color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.1)', value: stats.pending, label: 'Awaiting Approval' },
                         { icon: 'fa-circle-check', color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)', value: stats.resolved, label: 'Resolved & Closed' },
-                        { icon: 'fa-users', color: '#2B7A5F', bg: 'rgba(43, 122, 95, 0.15)', value: stats.activeUsers, label: 'Active Citizens' }
+                        { icon: 'fa-users', color: 'var(--primary)', bg: 'rgba(37, 99, 235, 0.15)', value: stats.activeUsers, label: 'Active Citizens' }
                     ].map((stat, i) => (
                         <div key={i} style={{
                             background: 'rgba(255, 255, 255, 0.03)',
@@ -228,7 +228,7 @@ const AdminDashboard = () => {
                         }}
                         onMouseEnter={e => {
                             e.currentTarget.style.transform = 'translateY(-5px)';
-                            e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                            e.currentTarget.style.background = 'var(--panel-bg)';
                         }}
                         onMouseLeave={e => {
                             e.currentTarget.style.transform = 'translateY(0)';
@@ -244,8 +244,8 @@ const AdminDashboard = () => {
                                 <i className={`fa-solid ${stat.icon}`}></i>
                             </div>
                             <div>
-                                <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2rem', margin: '0 0 4px 0', color: 'white', lineHeight: 1 }}>{stat.value}</h3>
-                                <p style={{ color: '#A8D5BA', fontSize: '0.9rem', margin: 0 }}>{stat.label}</p>
+                                <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '2rem', margin: '0 0 4px 0', color: 'var(--text-main)', lineHeight: 1 }}>{stat.value}</h3>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>{stat.label}</p>
                             </div>
                         </div>
                     ))}
@@ -253,11 +253,11 @@ const AdminDashboard = () => {
 
                 {/* Kanban Board */}
                 <div style={{ marginBottom: '60px' }}>
-                    <div style={{ display: 'flex', gap: '24px', overflowX: 'auto', paddingBottom: '24px', scrollbarWidth: 'thin', scrollbarColor: 'rgba(43,122,95,0.5) transparent' }}>
+                    <div style={{ display: 'flex', gap: '24px', overflowX: 'auto', paddingBottom: '24px', scrollbarWidth: 'thin', scrollbarColor: 'rgba(37,99,235,0.5) transparent' }}>
                         <WorkflowColumn title="Under Scrutiny" stages={['Under Scrutiny']} icon="fa-triangle-exclamation" color="#ef4444" />
                         <WorkflowColumn title="Pending Verification" stages={['Reported', 'Community Verification']} icon="fa-clock" color="#f59e0b" />
-                        <WorkflowColumn title="Approved" stages={['Approved']} icon="fa-thumbs-up" color="#4A9C7C" />
-                        <WorkflowColumn title="Active" stages={['Assigned', 'In Progress']} icon="fa-person-digging" color="#2B7A5F" />
+                        <WorkflowColumn title="Approved" stages={['Approved']} icon="fa-thumbs-up" color="var(--primary-hover)" />
+                        <WorkflowColumn title="Active" stages={['Assigned', 'In Progress']} icon="fa-person-digging" color="var(--primary)" />
                         <WorkflowColumn title="Resolved" stages={['Resolved', 'Closed']} icon="fa-check-double" color="#10b981" />
                     </div>
                 </div>
@@ -265,10 +265,10 @@ const AdminDashboard = () => {
                 {/* User Management */}
                 <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-                        <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(43, 122, 95, 0.2)', color: '#4A9C7C', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>
+                        <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(37, 99, 235, 0.2)', color: 'var(--primary-hover)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>
                             <i className="fa-solid fa-users-gear"></i>
                         </div>
-                        <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.5rem', margin: 0, color: 'white' }}>User Moderation</h3>
+                        <h3 style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.5rem', margin: 0, color: 'var(--text-main)' }}>User Moderation</h3>
                     </div>
                     
                     <div style={{
@@ -282,13 +282,13 @@ const AdminDashboard = () => {
                     }}>
                         <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse', minWidth: '800px' }}>
                             <thead>
-                                <tr style={{ background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                                    <th style={{ padding: '20px', color: '#A8D5BA', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>User</th>
-                                    <th style={{ padding: '20px', color: '#A8D5BA', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Role</th>
-                                    <th style={{ padding: '20px', color: '#A8D5BA', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Trust Score</th>
-                                    <th style={{ padding: '20px', color: '#A8D5BA', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Fake Reports</th>
-                                    <th style={{ padding: '20px', color: '#A8D5BA', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Status</th>
-                                    <th style={{ padding: '20px', color: '#A8D5BA', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Modify Score</th>
+                                <tr style={{ background: 'var(--panel-bg)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                                    <th style={{ padding: '20px', color: 'var(--text-muted)', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>User</th>
+                                    <th style={{ padding: '20px', color: 'var(--text-muted)', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Role</th>
+                                    <th style={{ padding: '20px', color: 'var(--text-muted)', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Trust Score</th>
+                                    <th style={{ padding: '20px', color: 'var(--text-muted)', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Fake Reports</th>
+                                    <th style={{ padding: '20px', color: 'var(--text-muted)', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Status</th>
+                                    <th style={{ padding: '20px', color: 'var(--text-muted)', fontWeight: '500', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Modify Score</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -296,28 +296,28 @@ const AdminDashboard = () => {
                                     <tr key={u._id} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', transition: 'background 0.2s' }} onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.02)'} onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
                                         <td style={{ padding: '20px' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(43, 122, 95, 0.3)', color: '#74B49B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+                                                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(37, 99, 235, 0.3)', color: '#74B49B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
                                                     {u.username.charAt(0).toUpperCase()}
                                                 </div>
-                                                <span style={{ fontWeight: '500', color: 'white' }}>{u.username}</span>
+                                                <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>{u.username}</span>
                                             </div>
                                         </td>
                                         <td style={{ padding: '20px' }}>
                                             <span style={{ 
-                                                background: u.role === 'admin' ? 'rgba(74, 156, 124, 0.2)' : 'rgba(255,255,255,0.05)',
-                                                color: u.role === 'admin' ? '#74B49B' : '#A8D5BA',
+                                                background: u.role === 'admin' ? 'rgba(74, 156, 124, 0.2)' : 'var(--panel-bg)',
+                                                color: u.role === 'admin' ? '#74B49B' : 'var(--text-muted)',
                                                 padding: '4px 10px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '600', textTransform: 'capitalize'
                                             }}>{u.role}</span>
                                         </td>
                                         <td style={{ padding: '20px' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                 <span style={{ fontWeight: '600', color: u.trustScore >= 50 ? '#10b981' : '#ef4444' }}>{u.trustScore}%</span>
-                                                <div style={{ width: '60px', height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+                                                <div style={{ width: '60px', height: '4px', background: 'var(--panel-border)', borderRadius: '2px', overflow: 'hidden' }}>
                                                     <div style={{ height: '100%', width: `${Math.min(100, Math.max(0, u.trustScore))}%`, background: u.trustScore >= 50 ? '#10b981' : '#ef4444' }}></div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td style={{ padding: '20px', color: u.fakeReportsCount > 0 ? '#f59e0b' : '#A8D5BA' }}>
+                                        <td style={{ padding: '20px', color: u.fakeReportsCount > 0 ? '#f59e0b' : 'var(--text-muted)' }}>
                                             {u.fakeReportsCount || 0}
                                         </td>
                                         <td style={{ padding: '20px' }}>
@@ -329,11 +329,11 @@ const AdminDashboard = () => {
                                         </td>
                                         <td style={{ padding: '20px' }}>
                                             {u.role !== 'admin' ? (
-                                                <div style={{ display: 'flex', gap: '4px', background: 'rgba(255,255,255,0.05)', padding: '4px', borderRadius: '8px', width: 'fit-content' }}>
+                                                <div style={{ display: 'flex', gap: '4px', background: 'var(--panel-bg)', padding: '4px', borderRadius: '8px', width: 'fit-content' }}>
                                                     <button onClick={() => adjustTrustScore(u.username, -1)} style={{ width: '28px', height: '28px', background: 'transparent', border: 'none', borderRadius: '4px', color: '#ef4444', cursor: 'pointer', transition: 'background 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onMouseEnter={e=>e.currentTarget.style.background='rgba(239,68,68,0.2)'} onMouseLeave={e=>e.currentTarget.style.background='transparent'} title="Decrease Score">
                                                         <i className="fa-solid fa-chevron-down"></i>
                                                     </button>
-                                                    <div style={{ width: '32px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: '600', fontSize: '0.85rem' }}>
+                                                    <div style={{ width: '32px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-main)', fontWeight: '600', fontSize: '0.85rem' }}>
                                                         {u.trustScore}
                                                     </div>
                                                     <button onClick={() => adjustTrustScore(u.username, 1)} style={{ width: '28px', height: '28px', background: 'transparent', border: 'none', borderRadius: '4px', color: '#10b981', cursor: 'pointer', transition: 'background 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onMouseEnter={e=>e.currentTarget.style.background='rgba(16,185,129,0.2)'} onMouseLeave={e=>e.currentTarget.style.background='transparent'} title="Increase Score">
