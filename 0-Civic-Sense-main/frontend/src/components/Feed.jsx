@@ -47,14 +47,30 @@ const Feed = () => {
             return;
         }
         if (userVotes[id] === 'up') return;
+        
+        // Optimistic UI update
+        const prevVote = userVotes[id];
+        setUserVotes(prev => ({ ...prev, [id]: 'up' }));
+        setIssues(prev => prev.map(i => {
+            if (i.id === id) {
+                let upvotes = i.upvotes + 1;
+                let downvotes = i.downvotes;
+                if (prevVote === 'down') downvotes = Math.max(0, downvotes - 1);
+                return { ...i, upvotes, downvotes };
+            }
+            return i;
+        }));
+
         try {
             await api.patch(`/api/issues/${id}/upvote`);
-            if (userVotes[id] === 'down') {
-                await api.patch(`/api/issues/${id}/upvote`);
+            if (prevVote === 'down') {
+                await api.patch(`/api/issues/${id}/upvote`); // Depending on backend logic, maybe 1 call is enough, but keeping existing behavior
             }
-            setUserVotes(prev => ({ ...prev, [id]: 'up' }));
         } catch (err) {
             console.error(err);
+            // Revert on error
+            setUserVotes(prev => ({ ...prev, [id]: prevVote }));
+            fetchIssues(); 
         }
     };
 
@@ -64,14 +80,41 @@ const Feed = () => {
             return;
         }
         if (userVotes[id] === 'down') return;
+        
+        // Optimistic UI update
+        const prevVote = userVotes[id];
+        setUserVotes(prev => ({ ...prev, [id]: 'down' }));
+        setIssues(prev => prev.map(i => {
+            if (i.id === id) {
+                let downvotes = i.downvotes + 1;
+                let upvotes = i.upvotes;
+                if (prevVote === 'up') upvotes = Math.max(0, upvotes - 1);
+                return { ...i, upvotes, downvotes };
+            }
+            return i;
+        }));
+
         try {
             await api.patch(`/api/issues/${id}/downvote`);
-            if (userVotes[id] === 'up') {
+            if (prevVote === 'up') {
                 await api.patch(`/api/issues/${id}/downvote`);
             }
-            setUserVotes(prev => ({ ...prev, [id]: 'down' }));
         } catch (err) {
             console.error(err);
+            // Revert on error
+            setUserVotes(prev => ({ ...prev, [id]: prevVote }));
+            fetchIssues();
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this issue?")) return;
+        try {
+            await api.delete(`/api/issues/${id}`);
+            setIssues(prev => prev.filter(i => i.id !== id));
+        } catch (err) {
+            console.error(err);
+            alert("Failed to delete issue.");
         }
     };
 
@@ -298,9 +341,16 @@ const Feed = () => {
                                     </button>
                                 </div>
                                 
-                                <button style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '8px', transition: 'color 0.2s' }} onMouseEnter={e=>e.currentTarget.style.color='white'} onMouseLeave={e=>e.currentTarget.style.color='var(--text-muted)'}>
-                                    <i className="fa-solid fa-share-nodes"></i>
-                                </button>
+                                <div style={{ display: 'flex', gap: '8px' }}>
+                                    {user && user.role === 'admin' && (
+                                        <button onClick={() => handleDelete(issue.id)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '8px', transition: 'color 0.2s', fontWeight: 'bold' }} title="Delete Issue">
+                                            <i className="fa-solid fa-trash"></i>
+                                        </button>
+                                    )}
+                                    <button style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '8px', transition: 'color 0.2s' }} onMouseEnter={e=>e.currentTarget.style.color='white'} onMouseLeave={e=>e.currentTarget.style.color='var(--text-muted)'}>
+                                        <i className="fa-solid fa-share-nodes"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}

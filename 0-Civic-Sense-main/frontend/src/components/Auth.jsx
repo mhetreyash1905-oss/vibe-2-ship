@@ -36,6 +36,7 @@ const Auth = () => {
                 const res = await api.post('/api/login', { email, password });
                 const user = res.data.user;
                 localStorage.setItem('user', JSON.stringify(user));
+                window.dispatchEvent(new Event('auth-change'));
                 
                 if (user.role === 'admin') navigate('/admin');
                 else navigate('/dashboard');
@@ -43,6 +44,7 @@ const Auth = () => {
                 const res = await api.post('/api/signup', { fullname, username, email, password });
                 const user = res.data.user;
                 localStorage.setItem('user', JSON.stringify(user));
+                window.dispatchEvent(new Event('auth-change'));
                 navigate('/dashboard');
             }
         } catch (err) {

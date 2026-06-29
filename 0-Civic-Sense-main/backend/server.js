@@ -6,6 +6,9 @@ const { GoogleGenAI } = require('@google/genai');
 const mongoose = require('mongoose');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
+const dns = require('dns');
+
+dns.setServers(['8.8.8.8', '8.8.4.4']); // Bypass local ISP DNS blocking SRV records
 
 const User = require('./models/User');
 const Issue = require('./models/Issue');
@@ -418,6 +421,16 @@ app.post('/api/issues/:id/verify', async (req, res) => {
 
         io.emit('issue_updated', issue);
         res.status(200).json(issue);
+    } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.delete('/api/issues/:id', async (req, res) => {
+    try {
+        const issue = await Issue.findOneAndDelete({ id: req.params.id });
+        if (!issue) return res.status(404).json({ error: 'Not found' });
+        
+        io.emit('issue_deleted', req.params.id);
+        res.status(200).json({ success: true });
     } catch (e) { res.status(500).json({ error: e.message }); }
 });
 

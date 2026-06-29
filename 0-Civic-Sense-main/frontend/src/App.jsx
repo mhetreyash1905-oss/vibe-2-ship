@@ -46,14 +46,30 @@ function Navigation() {
     };
 
     useEffect(() => {
+        const handleStorageChange = () => {
+            setUser(JSON.parse(localStorage.getItem('user')));
+        };
+        
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('auth-change', handleStorageChange);
+        handleStorageChange();
+        
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('auth-change', handleStorageChange);
+        };
+    }, []);
+
+    useEffect(() => {
         if (user) {
             fetchUser();
         }
-    }, [location.pathname]);
+    }, [location.pathname, user]);
 
     const handleLogout = () => {
         localStorage.removeItem('user');
         setUser(null);
+        window.dispatchEvent(new Event('auth-change'));
         navigate('/');
     };
 
@@ -185,8 +201,8 @@ function Navigation() {
                             {user.fullname ? user.fullname[0].toUpperCase() : user.username[0].toUpperCase()}
                         </div>
                         {showProfile && (
-                            <div style={{ position: 'absolute', top: '50px', right: '0', width: '220px', background: 'rgba(5, 21, 12, 0.95)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '8px', zIndex: 1000, boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
-                                <div style={{ padding: '8px 12px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '8px' }}>
+                            <div style={{ position: 'absolute', top: '50px', right: '0', width: '220px', background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', border: '1px solid var(--panel-border)', borderRadius: '12px', padding: '8px', zIndex: 1000, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
+                                <div style={{ padding: '8px 12px', borderBottom: '1px solid var(--panel-border)', marginBottom: '8px' }}>
                                     <p style={{ margin: 0, fontWeight: 'bold', color: 'var(--text-main)' }}>{user.fullname || user.username}</p>
                                     <small style={{ color: 'var(--text-muted)', textTransform: 'capitalize' }}>{user.role}</small>
                                 </div>

@@ -4,6 +4,9 @@
 import 'dotenv/config';
 import mongoose from 'mongoose';
 import User from './models/User.js';
+import dns from 'dns';
+
+dns.setServers(['8.8.8.8', '8.8.4.4']); // Bypass local ISP DNS blocking SRV records
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/civic_sense';
 
